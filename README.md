@@ -1,3 +1,3 @@
 # WebSocket
 
-Realtime notification for geliospro.con based on WebSockets.
+Realtime notifications for geliospro.con based on WebSockets.
