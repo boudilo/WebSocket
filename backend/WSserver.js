@@ -2,12 +2,12 @@ var http = require('http');
 var Static = require('node-static');
 var WebSocketServer = new require('ws');
 
-// подключенные клиенты
+// Клиенты
 var clients = {};
 
-// WebSocket-сервер на порту 8081
+// WebSocket-сервер на порту 3000
 var webSocketServer = new WebSocketServer.Server({
-  port: 8081
+  port: 3000
 });
 webSocketServer.on('connection', function(ws) {
 

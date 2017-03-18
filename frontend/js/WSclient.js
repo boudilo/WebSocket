@@ -1,7 +1,7 @@
-// создать подключение
-var socket = new WebSocket("ws://localhost:8081");
+// Создание подключения
+var socket = new WebSocket("ws://localhost:3000");
 
-// отправить сообщение из формы publish
+// Отправка сообщения из формы
 document.forms.publish.onsubmit = function() {
   var outgoingMessage = this.message.value;
 
@@ -9,13 +9,13 @@ document.forms.publish.onsubmit = function() {
   return false;
 };
 
-// обработчик входящих сообщений
+// Обработка входящих сообщений
 socket.onmessage = function(event) {
   var incomingMessage = event.data;
   showMessage(incomingMessage);
 };
 
-// показать сообщение в div#subscribe
+// Отображение сообщений от сервера в div#subscribe
 function showMessage(message) {
   var messageElem = document.createElement('div');
   messageElem.appendChild(document.createTextNode(message));
