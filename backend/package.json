@@ -1,0 +1,10 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "node WSserver.js"
+  },
+  "dependencies": {
+    "ws": "^2.2.1"
+  }
+}
