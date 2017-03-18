@@ -17,7 +17,7 @@ socket.onmessage = function(event) {
 
 // Отображение сообщений от сервера в div#subscribe
 function showMessage(message) {
-  var messageElem = document.createElement('div');
+  var messageElem = document.createElement('p');
   messageElem.appendChild(document.createTextNode(message));
   document.getElementById('subscribe').appendChild(messageElem);
 }
