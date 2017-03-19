@@ -1,5 +1,5 @@
 // Создание подключения
-var login = "firstClient" + new Date().getTime();
+var login = "firstClient";
 
 var socket = new WebSocket("ws://localhost:3000/?login=" + login);
 

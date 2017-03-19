@@ -28,9 +28,17 @@ webSocketServer.on('connection', function (ws) {
 
         if (parsedMsg.message != undefined) {
             console.log('Получено сообщение: ' + parsedMsg.message);
+            
+            var messageSender;
+            console.log(messageSender);
+			console.log(ws.upgradeReq.url);
+			messageSender = url.parse(ws.upgradeReq.url, true).query.login;
+            console.log("Ищем отправителя: " + messageSender);
+
             for (var key in clients) {
-                console.log("Отправляю сообщение: \"Пишут: " + parsedMsg.message + "\"");
-                clients[key].send("пишут: " + parsedMsg.message);
+				console.log("Указываем отправителя: " + messageSender);
+                console.log("Отправляю сообщение: \"" + messageSender + ": " + parsedMsg.message + "\"");
+                clients[key].send(messageSender + ": " + parsedMsg.message);
             }
         }
 
