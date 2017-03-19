@@ -3,7 +3,7 @@ var Static = require('node-static');
 var WebSocketServer = new require('ws');
 
 // Клиенты
-var clients = {};
+var clients = [];
 
 // WebSocket-сервер на порту 3000
 var webSocketServer = new WebSocketServer.Server({
@@ -16,12 +16,23 @@ webSocketServer.on('connection', function (ws) {
     console.log("Новое соединение: " + id);
 
     ws.on('message', function (message) {
-        console.log('Получено сообщение: ' + message);
 
-        for (var key in clients) {
-            console.log('Отправляю сообщение: ' + message);
-            clients[key].send("Вы написали сообщение: " + message);
+        var parsedMsg = JSON.parse(message);
+
+        if (parsedMsg.login != undefined) {
+            console.log('Подключился логин: ' + parsedMsg.login);
+            console.log("Отправляю сообщение: " + "\"Подключился логин: " + parsedMsg.login + "\"");
+            ws.send("Подключился логин: " + parsedMsg.login);
         }
+
+        if (parsedMsg.message != undefined) {
+            console.log('Получено сообщение: ' + parsedMsg.message);
+            for (var key in clients) {
+                console.log("Отправляю сообщение: \"Пишут: " + parsedMsg.message + "\"");
+                clients[key].send("пишут: " + parsedMsg.message);
+            }
+        }
+
     });
 
     ws.on('close', function () {
