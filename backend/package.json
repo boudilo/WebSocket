@@ -5,6 +5,7 @@
     "start": "node WSserver.js"
   },
   "dependencies": {
+    "url": "^0.11.0",
     "ws": "^2.2.1"
   }
 }

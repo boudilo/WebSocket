@@ -1,9 +1,10 @@
 var http = require('http');
 var Static = require('node-static');
 var WebSocketServer = new require('ws');
+var url = require('url');
 
 // Клиенты
-var clients = [];
+var clients = {};
 
 // WebSocket-сервер на порту 3000
 var webSocketServer = new WebSocketServer.Server({
@@ -11,19 +12,19 @@ var webSocketServer = new WebSocketServer.Server({
 });
 webSocketServer.on('connection', function (ws) {
 
-    var id = Math.random();
-    clients[id] = ws;
-    console.log("Новое соединение: " + id);
+    var client = url.parse(ws.upgradeReq.url, true).query
+    clients[client.login] = ws;
+    console.log("Новое соединение: " + client.login);
+
+    for (var key in clients) {
+        if (key != client.login) {
+            clients[key].send("Подключился логин: " + client.login);
+        }
+    }
 
     ws.on('message', function (message) {
 
         var parsedMsg = JSON.parse(message);
-
-        if (parsedMsg.login != undefined) {
-            console.log('Подключился логин: ' + parsedMsg.login);
-            console.log("Отправляю сообщение: " + "\"Подключился логин: " + parsedMsg.login + "\"");
-            ws.send("Подключился логин: " + parsedMsg.login);
-        }
 
         if (parsedMsg.message != undefined) {
             console.log('Получено сообщение: ' + parsedMsg.message);
@@ -36,8 +37,8 @@ webSocketServer.on('connection', function (ws) {
     });
 
     ws.on('close', function () {
-        console.log('Соединение закрыто: ' + id);
-        delete clients[id];
+        console.log('Соединение закрыто: ' + client.login);
+        delete clients[client.login];
     });
 
 });

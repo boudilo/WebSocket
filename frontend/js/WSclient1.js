@@ -1,11 +1,12 @@
 // Создание подключения
-var socket = new WebSocket("ws://localhost:3000");
+var login = "firstClient" + new Date().getTime();
 
-socket.onopen = function () {
-    var postfix = new Date();
-    postfix = postfix.getTime();
+var socket = new WebSocket("ws://localhost:3000/?login=" + login);
+
+/*socket.onopen = function () {
+    var postfix = new Date().getTime();
     socket.send("{\"login\":" + "\"tema" + postfix + "\"}");
-}
+}*/
 
 // Отправка сообщения из формы
 document.forms.publish.onsubmit = function () {
