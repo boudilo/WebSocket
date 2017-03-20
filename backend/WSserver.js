@@ -33,7 +33,7 @@ webSocketServer.on('connection', function (ws) {
 			messageSender = url.parse(ws.upgradeReq.url, true).query.login;
 
 			for (var key in clients) {
-				console.log("Отправляю сообщение: \"" + messageSender + ": " + parsedMsg.message + "\"");
+				console.log("Отправляю сообщение: \"" + messageSender + ": " + parsedMsg.message + "\" клиенту " + key);
 				clients[key].send(messageSender + ": " + parsedMsg.message);
 			}
 		}
